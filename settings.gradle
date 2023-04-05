@@ -16,3 +16,4 @@ rootProject.name = "Store App"
 include ':app'
 include ':product-domain'
 include ':product-data-repository'
+include ':product-data-remote'
