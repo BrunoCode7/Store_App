@@ -33,15 +33,14 @@ import com.example.products_domain.entity.product.Product
 @Composable
 fun ProductListView(viewModel: ProductsListViewModel, navController: NavController) {
     viewModel.loadProducts()
-    viewModel.productListFlow.collectAsState().value.let {
-        state ->
-        CommonScreen(state = state, onSuccess = {
-            list ->
-            productList(productList = list
-                , onClick = {
-                product->
-                    navController.currentBackStackEntry?.savedStateHandle?.set("selectedProduct",viewModel.convertToUiModel(product))
-                    navController.navigate(NavRoutes.ProductDetails.route)
+    viewModel.productListFlow.collectAsState().value.let { state ->
+        CommonScreen(state = state, onSuccess = { list ->
+            productList(productList = list, onClick = { product ->
+                navController.currentBackStackEntry?.savedStateHandle?.set(
+                    "selectedProduct",
+                    viewModel.convertToUiModel(product)
+                )
+                navController.navigate(NavRoutes.ProductDetails.route)
             })
         })
     }
@@ -49,12 +48,13 @@ fun ProductListView(viewModel: ProductsListViewModel, navController: NavControll
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun productList(productList:List<Product>,onClick:(product:Product)->Unit) {
-    LazyColumn(modifier = Modifier.padding(horizontal = 16.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp)){
+fun productList(productList: List<Product>, onClick: (product: Product) -> Unit) {
+    LazyColumn(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
 
-        items(productList){
-            product->
+        items(productList) { product ->
             Card(
                 modifier = Modifier
                     .clickable {
@@ -65,11 +65,18 @@ fun productList(productList:List<Product>,onClick:(product:Product)->Unit) {
                 elevation = 10.dp
             ) {
                 Row(
-                verticalAlignment = Alignment.CenterVertically) {
-                    Box(modifier = Modifier
-                        .size(110.dp)
-                        .padding(8.dp)){
-                        GlideImage(model = product.image, contentDescription = null, modifier = Modifier.fillParentMaxSize())
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(110.dp)
+                            .padding(8.dp)
+                    ) {
+                        GlideImage(
+                            model = product.image,
+                            contentDescription = null,
+                            modifier = Modifier.fillParentMaxSize()
+                        )
                     }
                     Column {
                         Text(text = product.title)
@@ -78,41 +85,53 @@ fun productList(productList:List<Product>,onClick:(product:Product)->Unit) {
                 }
             }
         }
-        }
     }
+}
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ProductDetails(product: ProductUi?) {
 
-    if (product!=null){
+    if (product != null) {
         Column(
             Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)){
-                GlideImage(model = product.image, contentDescription = null, modifier = Modifier.fillMaxSize())
+                .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(400.dp)
+            ) {
+                GlideImage(
+                    model = product.image,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
                 Box(
                     Modifier
                         .size(60.dp)
-                        .align(Alignment.TopEnd)){
-                    Icon(Icons.Filled.Star,
+                        .align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        Icons.Filled.Star,
                         "",
                         tint = MaterialTheme.colors.primary,
-                    modifier = Modifier.fillMaxSize())
-                    Text(text  = product.rating.rate.toString(),
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Text(
+                        text = product.rating.rate.toString(),
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                         fontSize = 14.sp,
-                        modifier = Modifier.align(Alignment.Center))
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
             }
 
             Text(
-                text  = product.title,
+                text = product.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
                 modifier = Modifier.fillMaxWidth()
@@ -121,7 +140,7 @@ fun ProductDetails(product: ProductUi?) {
             Spacer(modifier = Modifier.height(5.dp))
 
             Text(
-                text  = "Price:${product.price}",
+                text = "Price:${product.price}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
                 modifier = Modifier.fillMaxWidth()
@@ -129,23 +148,25 @@ fun ProductDetails(product: ProductUi?) {
             Spacer(modifier = Modifier.height(15.dp))
 
             Text(
-                text  = "Description",
+                text = "Description",
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text  = product.description,
+                text = product.description,
                 fontWeight = FontWeight.Normal,
                 fontSize = 15.sp,
                 modifier = Modifier.fillMaxWidth()
             )
         }
-    }else{
-        Column(Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+    } else {
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Text(text = "Something wrong happened")
         }
     }

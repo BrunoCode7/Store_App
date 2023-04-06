@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import com.example.presentation_common.state.UiState
 
 @Composable
-fun<T:Any> CommonScreen(state: UiState<T>, onSuccess: @Composable (T) -> Unit) {
-    when (state){
-        is UiState.Loading ->{
+fun <T : Any> CommonScreen(state: UiState<T>, onSuccess: @Composable (T) -> Unit) {
+    when (state) {
+        is UiState.Loading -> {
             LoadingView()
         }
-        is UiState.Error ->{
+        is UiState.Error -> {
             ErrorView(state.errorMessage)
         }
         is UiState.Success -> {

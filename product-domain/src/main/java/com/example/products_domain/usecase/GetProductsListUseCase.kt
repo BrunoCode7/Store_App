@@ -9,14 +9,15 @@ import javax.inject.Inject
 class GetProductsListUseCase @Inject constructor(
     configuration: Configuration,
     private val productRepository: ProductRepository
-):UseCase<GetProductsListUseCase.Request,GetProductsListUseCase.Response>(configuration = configuration) {
+) : UseCase<GetProductsListUseCase.Request, GetProductsListUseCase.Response>(configuration = configuration) {
 
     override fun process(request: Request): Flow<Response> =
         productRepository.getProducts().map {
-            Response(it) }
+            Response(it)
+        }
 
-    object Request:UseCase.Request
-    data class Response(val data:List<Product>):
+    object Request : UseCase.Request
+    data class Response(val data: List<Product>) :
         UseCase.Response
 
 }

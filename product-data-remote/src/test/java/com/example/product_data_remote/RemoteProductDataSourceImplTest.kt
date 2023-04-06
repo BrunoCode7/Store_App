@@ -9,9 +9,8 @@ import com.example.products_domain.entity.product.Rating
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
@@ -28,13 +27,14 @@ class RemoteProductDataSourceImplTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun testGetProducts () = runBlockingTest {
+    fun testGetProducts() = runBlockingTest {
         val expectedProduct = Product(
-            "test1","test1",1,"test1",1.0, Rating(1,1.0),"title1"
+            "test1", "test1", 1, "test1", 1.0, Rating(1, 1.0), "title1"
         )
 
-        val remoteProduct = ProductApiModel(1,"title1",1.0,"test1","test1","test1",
-            RatingApiModel(1.0,1)
+        val remoteProduct = ProductApiModel(
+            1, "title1", 1.0, "test1", "test1", "test1",
+            RatingApiModel(1.0, 1)
         )
 
         val expectedProducts = listOf(expectedProduct)
@@ -43,7 +43,7 @@ class RemoteProductDataSourceImplTest {
         whenever(productService.getProducts()).thenReturn(remoteProducts)
 
         val result = productDataSource.getProducts().first()
-        assertEquals(expectedProducts,result)
+        assertEquals(expectedProducts, result)
 
 
     }

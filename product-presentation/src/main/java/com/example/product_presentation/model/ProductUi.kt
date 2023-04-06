@@ -12,4 +12,4 @@ data class ProductUi(
     val price: Double,
     val rating: RatingUi,
     val title: String
-):Parcelable
+) : Parcelable

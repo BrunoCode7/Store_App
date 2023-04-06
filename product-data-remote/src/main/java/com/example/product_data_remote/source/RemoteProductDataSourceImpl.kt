@@ -6,27 +6,30 @@ import com.example.product_data_repository.data_source.remote.RemoteProductDataS
 import com.example.products_domain.entity.UseCaseException
 import com.example.products_domain.entity.product.Product
 import com.example.products_domain.entity.product.Rating
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RemoteProductDataSourceImpl @Inject constructor(
     private val productService: ProductService
-): RemoteProductDataSource{
+) : RemoteProductDataSource {
 
     override fun getProducts(): Flow<List<Product>> = flow {
         emit(productService.getProducts())
-    }.map {
-        products ->
+    }.map { products ->
         products.map { productApiModel -> convert(productApiModel) }
     }.catch { throw UseCaseException.ProductException(it) }
 
 
-    private fun convert(productApiModel: ProductApiModel)
-    = Product(category = productApiModel.category,
-    description = productApiModel.description,
-    id = productApiModel.id,
-    image = productApiModel.image,
-    price = productApiModel.price,
-    rating = Rating(productApiModel.rating.count,productApiModel.rating.rate),
-    title = productApiModel.title)
+    private fun convert(productApiModel: ProductApiModel) = Product(
+        category = productApiModel.category,
+        description = productApiModel.description,
+        id = productApiModel.id,
+        image = productApiModel.image,
+        price = productApiModel.price,
+        rating = Rating(productApiModel.rating.count, productApiModel.rating.rate),
+        title = productApiModel.title
+    )
 }

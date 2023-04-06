@@ -42,14 +42,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(navController: NavHostController) {
-    NavHost(navController, startDestination = NavRoutes.Products.route
+    NavHost(
+        navController, startDestination = NavRoutes.Products.route
     ) {
         composable(route = NavRoutes.Products.route) {
-            ProductListView(viewModel = hiltViewModel() , navController =navController )
+            ProductListView(viewModel = hiltViewModel(), navController = navController)
         }
 
-        composable(route =NavRoutes.ProductDetails.route) {
-            val result = navController.previousBackStackEntry?.savedStateHandle?.get<ProductUi>("selectedProduct")
+        composable(route = NavRoutes.ProductDetails.route) {
+            val result =
+                navController.previousBackStackEntry?.savedStateHandle?.get<ProductUi>("selectedProduct")
             ProductDetails(result)
         }
     }

@@ -18,7 +18,5 @@ class AppModule {
 }
 
 
-
-
 @HiltAndroidApp
 class ProductApplication : Application()

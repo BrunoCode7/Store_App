@@ -9,6 +9,6 @@ import javax.inject.Inject
 class ProductRepositoryImpl @Inject constructor(
     private val remoteProductDataSource: RemoteProductDataSource
 
-) :ProductRepository{
+) : ProductRepository {
     override fun getProducts(): Flow<List<Product>> = remoteProductDataSource.getProducts()
 }

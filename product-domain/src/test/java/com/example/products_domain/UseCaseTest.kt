@@ -1,6 +1,6 @@
 package com.example.products_domain
 
-import com.example.products_domain.entity.Result.*
+import com.example.products_domain.entity.Result.Success
 import com.example.products_domain.usecase.UseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Test
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import org.mockito.kotlin.mock
 
 /**
@@ -34,8 +34,10 @@ class UseCaseTest {
                 UseCase.Response>(configuration) {
             override fun process(request: Request):
                     Flow<Response> {
-                assertEquals(this@UseCaseTest.request,
-                    request)
+                assertEquals(
+                    this@UseCaseTest.request,
+                    request
+                )
                 return flowOf(response)
             }
         }

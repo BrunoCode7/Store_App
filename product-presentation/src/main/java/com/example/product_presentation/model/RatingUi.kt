@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class RatingUi(
     val count: Int,
     val rate: Double
-):Parcelable
+) : Parcelable
