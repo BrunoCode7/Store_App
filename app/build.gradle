@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -48,6 +50,12 @@ android {
 }
 
 dependencies {
+    implementation(project(path: ":product-presentation"))
+    implementation(project(path: ":product-domain"))
+    implementation(project(path: ":presentation-common"))
+    implementation(project(path: ":product-data-remote"))
+//    implementation(project(path: ":data-local"))
+    implementation(project(path: ":product-data-repository"))
     implementation androidx.core
     implementation androidx.appCompat
     implementation material.material
@@ -56,5 +64,9 @@ dependencies {
     implementation androidx.composeUiToolingPreview
     implementation androidx.lifecycleRuntimeKtx
     implementation androidx.composeActivity
+    implementation androidx.navigationCompose
+    implementation androidx.hiltNavigationCompose
+    implementation di.hiltAndroid
+    kapt di.hiltCompiler
     testImplementation test.junit
 }

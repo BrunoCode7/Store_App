@@ -6,12 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.presentation_common.navigation.NavRoutes
+import com.example.product_presentation.model.ProductUi
+import com.example.product_presentation.screen.ProductDetails
+import com.example.product_presentation.screen.ProductListView
 import com.example.storeapp.ui.theme.StoreAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +31,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    val navController =
+                        rememberNavController()
+                    App(navController = navController)
                 }
             }
         }
@@ -30,14 +41,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+fun App(navController: NavHostController) {
+    NavHost(navController, startDestination = NavRoutes.Products.route
+    ) {
+        composable(route = NavRoutes.Products.route) {
+            ProductListView(viewModel = hiltViewModel() , navController =navController )
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    StoreAppTheme {
-        Greeting("Android")
+        composable(route =NavRoutes.ProductDetails.route) {
+            val result = navController.previousBackStackEntry?.savedStateHandle?.get<ProductUi>("selectedProduct")
+            ProductDetails(result)
+        }
     }
 }

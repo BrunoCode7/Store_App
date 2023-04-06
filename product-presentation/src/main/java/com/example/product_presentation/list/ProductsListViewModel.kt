@@ -3,6 +3,8 @@ package com.example.product_presentation.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.presentation_common.state.UiState
+import com.example.product_presentation.model.ProductUi
+import com.example.product_presentation.model.RatingUi
 import com.example.products_domain.entity.Result
 import com.example.products_domain.entity.Result.Error
 import com.example.products_domain.entity.product.Product
@@ -37,5 +39,11 @@ class ProductsListViewModel @Inject constructor(
                 UiState.Success(result.data.data)
             }
         }
+    }
+
+    fun convertToUiModel(product: Product): ProductUi {
+        return ProductUi(product.category,product.description,product.id,product.image,product.price,
+            RatingUi(product.rating.count,product.rating.rate),product.title
+        )
     }
 }

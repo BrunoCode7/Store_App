@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+
 }
 
 android {
@@ -51,6 +53,7 @@ dependencies {
     implementation androidx.lifecycleRuntimeKtx
     implementation androidx.navigationCompose
     implementation di.hiltAndroid
+    implementation ui.glide
     kapt di.hiltCompiler
     testImplementation test.junit
     testImplementation test.coroutines
