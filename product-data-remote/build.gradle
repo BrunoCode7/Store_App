@@ -37,6 +37,7 @@ dependencies {
     implementation(project(path: ":product-data-repository"))
     implementation coroutines.coroutinesAndroid
     implementation network.okHttp
+    implementation network.okHttp3Logging
     implementation network.retrofit
     implementation network.retrofitMoshi
     implementation network.moshi

@@ -70,6 +70,7 @@ buildscript {
         network = [
                 okHttp : "com.squareup.okhttp3:okhttp:${versions.okHttp}",
                 retrofit : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+                okHttp3Logging : "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}",
                 retrofitMoshi: "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
                 moshi : "com.squareup.moshi:moshi:${versions.moshi}",
                 moshiKotlin : "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
